@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حلول واجب سيف علي</title>
+    <!-- تضمين مكتبة Tailwind CSS للتصميم -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- تضمين مكتبة Lucide للأيقونات -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        /* إعدادات الطباعة وتحويل PDF */
+        @media print {
+            body { background-color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .print-hidden { display: none !important; }
+            .print-expand { 
+                max-height: none !important; 
+                opacity: 1 !important; 
+                overflow: visible !important; 
+                border-top: none !important; 
+                display: block !important;
+            }
+            .print-shadow-none { box-shadow: none !important; border: 1px solid #e5e7eb !important; margin-bottom: 2rem !important; }
+            .print-block { display: block !important; }
+            
+            body::before {
+                content: attr(data-print-title);
+                display: block;
+                text-align: center;
+                font-size: 24px;
+                font-weight: bold;
+                margin-bottom: 20px;
+                padding-bottom: 10px;
+                border-bottom: 2px solid #000;
+                color: black;
+            }
+        }
+
+        /* حركات الانسيابية (Animations) */
+        .accordion-content {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .accordion-content.open {
+            max-height: 5000px;
+            opacity: 1;
+            border-top: 1px solid #f3f4f6;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 min-h-screen text-slate-800" data-print-title="حلول واجب سيف علي - برمجة C++">
+
+    <!-- شريط الرأس (Header) -->
+    <div class="sticky top-0 z-20 bg-gray-900 border-b border-gray-800 shadow-md print-hidden">
+        <div class="max-w-4xl mx-auto p-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            
+            <div class="flex items-center gap-3">
+                <div class="bg-yellow-500 p-2 rounded-lg text-gray-900 shadow-[0_0_15px_rgba(234,179,8,0.3)]">
+                    <i data-lucide="code" class="w-6 h-6 font-bold"></i>
+                </div>
+                <div>
+                    <h1 id="main-title" class="text-xl md:text-2xl font-bold text-white">حلول واجب سيف علي</h1>
+                    <p id="sub-title" class="text-sm text-gray-400 font-medium mt-1 flex items-center gap-1">
+                        <i data-lucide="user-check" class="w-4 h-4"></i>
+                        جاهز للشرح الشفوي والمناقشة
+                    </p>
+                </div>
+            </div>
+            
+            <div class="flex bg-gray-800 p-1 rounded-lg border border-gray-700 items-center flex-wrap justify-center gap-1">
+                <button onclick="window.print()" class="flex items-center gap-1 px-3 py-2 rounded-md font-bold transition-all text-sm text-blue-400 hover:text-blue-300 hover:bg-gray-700" title="Print / PDF">
+                    <i data-lucide="printer" class="w-4 h-4"></i>
+                    <span class="hidden md:inline">PDF</span>
+                </button>
+                <button onclick="exportWord()" class="flex items-center gap-1 px-3 py-2 rounded-md font-bold transition-all text-sm text-green-400 hover:text-green-300 hover:bg-gray-700" title="Export Word">
+                    <i data-lucide="download" class="w-4 h-4"></i>
+                    <span class="hidden md:inline" id="btn-word-text">Word</span>
+                </button>
+                
+                <div class="w-px h-6 bg-gray-600 mx-1 md:mx-2"></div>
+
+                <button id="btn-ar" onclick="setLanguage('ar')" class="flex items-center gap-2 px-3 md:px-4 py-2 rounded-md font-bold transition-all text-sm bg-yellow-500 text-gray-900 shadow-sm">
+                    <i data-lucide="languages" class="w-4 h-4"></i>
+                    <span class="hidden sm:inline">العربية + الشرح</span>
+                    <span class="sm:hidden">عربي</span>
+                </button>
+                <button id="btn-en" onclick="setLanguage('en')" class="flex items-center gap-2 px-3 md:px-4 py-2 rounded-md font-bold transition-all text-sm text-gray-400 hover:text-white">
+                    <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                    <span class="hidden sm:inline">English (Answers)</span>
+                    <span class="sm:hidden">EN</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="max-w-4xl mx-auto p-4 md:p-6 space-y-6 mt-4 pb-20">
+
+        <!-- نصيحة ذهبية -->
+        <div class="bg-blue-50 border border-blue-200 p-5 rounded-xl mb-6 shadow-sm flex gap-4 items-start print-hidden">
+            <i data-lucide="lightbulb" class="text-blue-600 shrink-0 mt-1 w-7 h-7"></i>
+            <div>
+                <h3 id="tip-title" class="text-blue-900 font-bold text-lg mb-1">نصيحة ذهبية</h3>
+                <p id="tip-body" class="text-blue-800 font-medium leading-relaxed">
+                    الأساتذة يركزون على الفهم أكثر من الحفظ. افتح كل سؤال واقرأ (شلون تشرحها للأستاذ)، هذا المربع الأصفر هو السر اللي راح يخليك تجاوب بثقة وتاخذ درجة كاملة.
+                </p>
+            </div>
+        </div>
+
+        <!-- حاوية الأسئلة -->
+        <div id="questions-container" class="space-y-4">
+            <!-- سيتم توليد الأسئلة هنا بواسطة JavaScript -->
+        </div>
+
+    </div>
+
+    <!-- كود JavaScript للبرمجة والتفاعل -->
+    <script>
+        // --- بيانات الأسئلة ---
+        const assignmentData = [
+            {
+                id: 1,
+                q_en: "Q1: What do you mean by program?",
+                q_ar: "السؤال الأول: ماذا تقصد بالبرنامج؟",
+                ans_en: "A program is a set of logical instructions written in a programming language that a computer can execute to perform a specific task or solve a problem.",
+                ans_ar: "البرنامج هو مجموعة من التعليمات والأوامر المنطقية المكتوبة بلغة برمجة، والتي يمكن للحاسوب تنفيذها لأداء مهمة معينة أو حل مشكلة.",
+                explanation: "إذا سألك الأستاذ كُله: أستاذ البرنامج ببساطة هو مجموعة أوامر نكتبها بلغة يفهمها الحاسوب (مثل C++)، حتى نخليه يسوي شغلة معينة إحنا نريدها، مثل آلة حاسبة أو لعبة أو نظام."
+            },
+            {
+                id: 2,
+                q_en: "Q2: Why C++ language becomes quite popular?",
+                q_ar: "السؤال الثاني: لماذا أصبحت لغة C++ شائعة ومشهورة جداً؟",
+                ans_en: "1. It supports all features of both structured programming and Object-Oriented Programming (OOP).\n2. It focuses on function and class templates for handling various data types.",
+                ans_ar: "1. لأنها تدعم جميع ميزات البرمجة الهيكلية (Structured Programming) والبرمجة كائنية التوجه (OOP).\n2. تركيزها على قوالب الدوال والفئات (Templates) للتعامل مع أنواع البيانات.",
+                explanation: "إذا سألك كُله: أستاذ لأن هاي اللغة جمعت بين الماضي والحاضر؛ يعني تدعم البرمجة الهيكلية القديمة، وبنفس الوقت تدعم الـ OOP (البرمجة الكائنية) اللي تعتمد على الكلاسات، وبيها (Templates) تسهل علينا ترتيب البيانات."
+            },
+            {
+                id: 3,
+                q_en: "Q3: Talk briefly about C++ program development process?",
+                q_ar: "السؤال الثالث: تحدث باختصار عن عملية تطوير برنامج C++ (مراحل الـ PDP)؟",
+                ans_en: "The C++ program development process consists of 6 phases:\n1. Edit: Typing the source code (.cpp).\n2. Pre-Processor: Preparing files before compilation.\n3. Compilation: Converting source code to object code.\n4. Linking: Combining object code with library functions.\n5. Loading: Loading the program into memory.\n6. CPU: Executing the instructions.",
+                ans_ar: "تمر عملية التطوير بـ 6 مراحل:\n1. التحرير (Edit): كتابة الكود وحفظه.\n2. المعالج المسبق (Pre-processor): تهيئة الملفات للترجمة.\n3. الترجمة (Compilation): تحويل الكود إلى لغة الآلة (Object-code).\n4. الربط (Linking): ربط الكود بمكتبات اللغة.\n5. التحميل (Loading): تحميل البرنامج للذاكرة RAM.\n6. التنفيذ (CPU): المعالج ينفذ البرنامج.",
+                explanation: "اشرحها للأستاذ كقصة: أستاذ أول شي نكتب الكود (Edit)، بعدين المعالج المسبق يرتبه (Pre-processor)، المترجم يحوله لصفر وواحد (Compilation)، الرابط يجيب المكتبات الجاهزة يربطها وياه (Linking)، نظام التشغيل يصعده للرام (Loading)، وأخيراً المعالج (CPU) ينفذه ونشوف النتيجة."
+            },
+            {
+                id: '4a',
+                isAlgo: true,
+                q_en: "Q4 (a): Write an algorithm and flowchart to Sum the even numbers for n numbers.",
+                q_ar: "السؤال الرابع (A): خوارزمية ومخطط انسيابي لجمع الأرقام الزوجية من أصل n من الأرقام.",
+                algo_en: "1. Start\n2. Read n (total numbers count)\n3. Set Sum = 0, Counter = 0\n4. Read a number (x)\n5. If (x % 2 == 0) then Sum = Sum + x\n6. Counter = Counter + 1\n7. If (Counter < n) go to step 4\n8. Print Sum\n9. Stop",
+                algo_ar: "1. البداية.\n2. اقرأ n (عدد الأرقام الكلي).\n3. اجعل المجموع (Sum = 0) والعداد (Counter = 0).\n4. اقرأ رقم (x).\n5. إذا كان (x % 2 == 0) إذن Sum = Sum + x.\n6. زِد العداد Counter = Counter + 1.\n7. إذا كان (Counter < n) ارجع للخطوة 4.\n8. اطبع المجموع Sum.\n9. النهاية.",
+                explanation: "الفكرة هنا: الأستاذ يريدك تقرأ (n) من الأرقام (يعني المستخدم يحدد كم رقم يريد يدخل). نفرض مجموعنا صفر والعداد صفر. نظل نقرأ أرقام، الرقم اللي باقي قسمته على 2 يساوي صفر (يعني زوجي) نجمعه وي المجموع، ونزيد العداد. من يوصل العداد للرقم n نوقف ونطبع المجموع.",
+                flowchartHtml: `
+                    <div class="flex flex-col items-center">
+                        <div class="flex items-center justify-center text-center font-bold text-sm md:text-base border-2 shadow-sm px-4 py-2 w-48 rounded-full bg-red-50 border-red-300 text-red-800">Start</div>
+                        <div class="flex flex-col items-center my-1"><div class="w-0.5 h-6 bg-gray-400"></div><i data-lucide="arrow-down" class="text-gray-400 w-4 h-4 -mt-1"></i></div>
+                        <div class="mx-auto w-52 flex justify-center relative"><div class="flex items-center justify-center text-center font-bold text-sm md:text-base border-2 shadow-sm px-4 py-2 w-48 bg-blue-50 border-blue-300 text-blue-800 transform skew-x-[-15deg]"><span class="transform skew-x-[15deg] block">Read n</span></div></div>
+                        <div class="flex flex-col items-center my-1"><div class="w-0.5 h-6 bg-gray-400"></div><i data-lucide="arrow-down" class="text-gray-400 w-4 h-4 -mt-1"></i></div>
+                        <div class="flex items-center justify-center text-center font-bold text-sm md:text-base border-2 shadow-sm px-4 py-2 w-48 rounded bg-green-50 border-green-300 text-green-800">Sum = 0, C = 0</div>
+                        <div class="flex flex-col items-center my-1"><div class="w-0.5 h-6 bg-gray-400"></div><i data-lucide="arrow-down" class="text-gray-400 w-4 h-4 -mt-1"></i></div>
+                        <div class="flex items-center">
+                            <div class="border-t-2 border-l-2 border-gray-400 w-16 h-32 -mt-16 mr-2 rounded-tl-lg invisible"></div>
+                            <div class="flex flex-col items-center">
+                                <div class="mx-auto w-52 flex justify-center relative"><div class="flex items-center justify-center text-center font-bold text-sm md:text-base border-2 shadow-sm px-4 py-2 w-48 bg-blue-50 border-blue-300 text-blue-800 transform skew-x-[-15deg]"><span class="transform skew-x-[15deg] block">Read x</span></div></div>
+                                <div class="flex flex-col items-center my-1"><div class="w-0.5 h-6 bg-gray-400"></div><i data-lucide="arrow-down" class="text-gray-400 w-4 h-4 -mt-1"></i></div>
+                                <div class="mx-auto w-32 h-32 relative my-4 flex items-center justify-center"><div class="absolute inset-0 bg-yellow-50 border-2 border-yellow-400 transform rotate-45 shadow-sm"></div><div class="relative z-10 font-bold text-yellow-900 text-sm text-center px-2">Is x % 2 == 0 ?</div></div>
+                                <div class="flex w-full justify-between px-12 relative"><span class="absolute -left-6 top-1 text-xs font-bold text-red-600">No</span><span class="absolute -right-8 top-1 text-xs font-bold text-green-600">Yes</span></div>
+                                <div class="flex items-start w-full justify-center relative -mt-4">
+                                    <div class="w-1/2 h-8 border-l-2 border-t-2 border-gray-400 rounded-tl-lg"></div>
+                                    <div class="w-1/2 h-8 border-r-2 border-t-2 border-gray-400 rounded-tr-lg"></div>
+                                    <div class="absolute right-[-4rem] top-8"><div class="flex items-center justify-center text-center font-bold text-sm md:text-base border-2 shadow-sm px-4 py-2 w-48 rounded bg-green-50 border-green-300 text-green-800">Sum = Sum + x</div></div>
+                                </div>
+                                <div class="h-16 w-0.5 bg-gray-400 mt-8 relative"><div class="absolute top-4 left-[-4.1rem] w-16 h-0.5 bg-gray-400"></div></div>
+                                <div class="flex items-center justify-center text-center font-bold text-sm md:text-base border-2 shadow-sm px-4 py-2 w-48 rounded bg-green-50 border-green-300 text-green-800">C = C + 1</div>
+                                <div class="flex flex-col items-center my-1"><div class="w-0.5 h-6 bg-gray-400"></div><i data-lucide="arrow-down" class="text-gray-400 w-4 h-4 -mt-1"></i></div>
+                                <div class="mx-auto w-32 h-32 relative my-4 flex items-center justify-center"><div class="absolute inset-0 bg-yellow-50 border-2 border-yellow-400 transform rotate-45 shadow-sm"></div><div class="relative z-10 font-bold text-yellow-900 text-sm text-center px-2">Is C < n ?</div></div>
+                            </div>
+                            <div class="border-b-2 border-r-2 border-t-2 border-gray-400 w-16 h-[34rem] -mt-[14rem] ml-2 rounded-r-lg flex flex-col justify-end"><div class="w-full text-center text-xs font-bold text-green-600 mb-[32rem] bg-white">Yes</div></div>
+                        </div>
+                        <div class="flex flex-col items-center my-1"><div class="w-0.5 h-6 bg-gray-400"></div><i data-lucide="arrow-down" class="text-gray-400 w-4 h-4 -mt-1"></i></div>
+                        <span class="text-xs font-bold text-red-600 ml-16 -mt-6 bg-white px-1">No</span>
+                        <div class="mx-auto w-52 flex justify-center relative"><div class="flex items-center justify-center text-center font-bold text-sm md:text-base border-2 shadow-sm px-4 py-2 w-48 bg-blue-50 border-blue-300 text-blue-800 transform skew-x-[-15deg]"><span class="transform skew-x-[15deg] block">Print Sum</span></div></div>
+                        <div class="flex flex-col items-center my-1"><div class="w-0.5 h-6 bg-gray-400"></div><i data-lucide="arrow-down" class="text-gray-400 w-4 h-4 -mt-1"></i></div>
+                        <div class="flex items-center justify-center text-center font-bold text-sm md:text-base border-2 shadow-sm px-4 py-2 w-48 rounded-full bg-red-50 border-red-300 text-red-800">Stop</div>
+                    </div>`
+            },
+            {
+                id: '4b',
+                isAlgo: true,
+                q_en: "Q4 (b): Write an algorithm and flowchart to Display numbers from 0 to 10.",
+                q_ar: "السؤال الرابع (B): خوارزمية ومخطط لطباعة الأرقام من 0 إلى 10.",
+                algo_en: "1. Start\n2. Set i = 0\n3. Print i\n4. i = i + 1\n5. If (i <= 10) go to step 3\n6. Stop",
+                algo_ar: "1. البداية.\n2. اجعل المتغير (i = 0).\n3. اطبع i.\n4. زِد المتغير i = i + 1.\n5. إذا كان (i <= 10) ارجع للخطوة 3.\n6. النهاية.",
+                explanation: "هذا أسهل سؤال. الأستاذ يريد يطبع من صفر للعشرة. نبدي عدادنا من الصفر. نطبعه، ونزيده واحد. نسأل: هل العداد عبر الـ 10؟ إذا لا، نرجع نطبعه. من يعبر يوقف البرنامج.",
+                flowchartHtml: `
+                    <div class="flex flex-col items-center">
+                        <div class="flex items-center justify-center text-center font-bold text-sm md:text-base border-2 shadow-sm px-4 py-2 w-48 rounded-full bg-red-50 border-red-300 text-red-800">Start</div>
+                        <div class="flex flex-col items-center my-1"><div class="w-0.5 h-6 bg-gray-400"></div><i data-lucide="arrow-down" class="text-gray-400 w-4 h-4 -mt-1"></i></div>
+                        <div class="flex items-center justify-center text-center font-bold text-sm md:text-base border-2 shadow-sm px-4 py-2 w-48 rounded bg-green-50 border-green-300 text-green-800">i = 0</div>
+                        <div class="flex flex-col items-center my-1"><div class="w-0.5 h-6 bg-gray-400"></div><i data-lucide="arrow-down" class="text-gray-400 w-4 h-4 -mt-1"></i></div>
+                        <div class="flex items-center">
+                            <div class="flex flex-col items-center">
+                                <div class="mx-auto w-52 flex justify-center relative"><div class="flex items-center justify-center text-center font-bold text-sm md:text-base border-2 shadow-sm px-4 py-2 w-48 bg-blue-50 border-blue-300 text-blue-800 transform skew-x-[-15deg]"><span class="transform skew-x-[15deg] block">Print i</span></div></div>
+                                <div class="flex flex-col items-center my-1"><div class="w-0.5 h-6 bg-gray-400"></div><i data-lucide="arrow-down" class="text-gray-400 w-4 h-4 -mt-1"></i></div>
+                                <div class="flex items-center justify-center text-center font-bold text-sm md:text-base border-2 shadow-sm px-4 py-2 w-48 rounded bg-green-50 border-green-300 text-green-800">i = i + 1</div>
+                                <div class="flex flex-col items-center my-1"><div class="w-0.5 h-6 bg-gray-400"></div><i data-lucide="arrow-down" class="text-gray-400 w-4 h-4 -mt-1"></i></div>
+                                <div class="mx-auto w-32 h-32 relative my-4 flex items-center justify-center"><div class="absolute inset-0 bg-yellow-50 border-2 border-yellow-400 transform rotate-45 shadow-sm"></div><div class="relative z-10 font-bold text-yellow-900 text-sm text-center px-2">Is i <= 10 ?</div></div>
+                            </div>
+                            <div class="border-b-2 border-r-2 border-t-2 border-gray-400 w-12 h-[12rem] -mt-[2rem] ml-2 rounded-r-lg"><div class="w-full text-center text-xs font-bold text-green-600 mt-2 bg-white">Yes</div></div>
+                        </div>
+                        <div class="flex flex-col items-center my-1"><div class="w-0.5 h-6 bg-gray-400"></div><i data-lucide="arrow-down" class="text-gray-400 w-4 h-4 -mt-1"></i></div>
+                        <span class="text-xs font-bold text-red-600 ml-16 -mt-6 bg-white px-1">No</span>
+                        <div class="flex items-center justify-center text-center font-bold text-sm md:text-base border-2 shadow-sm px-4 py-2 w-48 rounded-full bg-red-50 border-red-300 text-red-800">Stop</div>
+                    </div>`
+            },
+            {
+                id: '4c',
+                isAlgo: true,
+                q_en: "Q4 (c): Write an algorithm and flowchart for The multiplication of 10 numbers.",
+                q_ar: "السؤال الرابع (C): خوارزمية ومخطط لضرب 10 أرقام.",
+                algo_en: "1. Start\n2. Set Product = 1, Counter = 0\n3. Read number (x)\n4. Product = Product * x\n5. Counter = Counter + 1\n6. If (Counter < 10) go to step 3\n7. Print Product\n8. Stop",
+                algo_ar: "1. البداية.\n2. اجعل ناتج الضرب (Product = 1) والعداد (Counter = 0).\n3. اقرأ رقم (x).\n4. اضرب الرقم بالناتج: Product = Product * x.\n5. زِد العداد Counter = Counter + 1.\n6. إذا كان (Counter < 10) ارجع للخطوة 3.\n7. اطبع الناتج Product.\n8. النهاية.",
+                explanation: "دير بالك هنا وتذكر هاي الحجاية: الأستاذ يشوفك فاهم لو لا من القيمة الابتدائية. بالجمع نخليها (0) حتى ميأثر. بس بالضرب لازم نخليها (1)، لأن أي رقم ينضرب بصفر يصير صفر ويفشل البرنامج. نقرأ 10 أرقام نضربهم واحد بالثاني ونطبع النتيجة بالنهاية.",
+                flowchartHtml: `
+                    <div class="flex flex-col items-center">
+                        <div class="flex items-center justify-center text-center font-bold text-sm md:text-base border-2 shadow-sm px-4 py-2 w-48 rounded-full bg-red-50 border-red-300 text-red-800">Start</div>
+                        <div class="flex flex-col items-center my-1"><div class="w-0.5 h-6 bg-gray-400"></div><i data-lucide="arrow-down" class="text-gray-400 w-4 h-4 -mt-1"></i></div>
+                        <div class="flex items-center justify-center text-center font-bold text-sm md:text-base border-2 shadow-sm px-4 py-2 w-48 rounded bg-green-50 border-green-300 text-green-800">Prod = 1, C = 0</div>
+                        <div class="flex flex-col items-center my-1"><div class="w-0.5 h-6 bg-gray-400"></div><i data-lucide="arrow-down" class="text-gray-400 w-4 h-4 -mt-1"></i></div>
+                        <div class="flex items-center">
+                            <div class="flex flex-col items-center">
+                                <div class="mx-auto w-52 flex justify-center relative"><div class="flex items-center justify-center text-center font-bold text-sm md:text-base border-2 shadow-sm px-4 py-2 w-48 bg-blue-50 border-blue-300 text-blue-800 transform skew-x-[-15deg]"><span class="transform skew-x-[15deg] block">Read x</span></div></div>
+                                <div class="flex flex-col items-center my-1"><div class="w-0.5 h-6 bg-gray-400"></div><i data-lucide="arrow-down" class="text-gray-400 w-4 h-4 -mt-1"></i></div>
+                                <div class="flex items-center justify-center text-center font-bold text-sm md:text-base border-2 shadow-sm px-4 py-2 w-48 rounded bg-green-50 border-green-300 text-green-800">Prod = Prod * x</div>
+                                <div class="flex flex-col items-center my-1"><div class="w-0.5 h-6 bg-gray-400"></div><i data-lucide="arrow-down" class="text-gray-400 w-4 h-4 -mt-1"></i></div>
+                                <div class="flex items-center justify-center text-center font-bold text-sm md:text-base border-2 shadow-sm px-4 py-2 w-48 rounded bg-green-50 border-green-300 text-green-800">C = C + 1</div>
+                                <div class="flex flex-col items-center my-1"><div class="w-0.5 h-6 bg-gray-400"></div><i data-lucide="arrow-down" class="text-gray-400 w-4 h-4 -mt-1"></i></div>
+                                <div class="mx-auto w-32 h-32 relative my-4 flex items-center justify-center"><div class="absolute inset-0 bg-yellow-50 border-2 border-yellow-400 transform rotate-45 shadow-sm"></div><div class="relative z-10 font-bold text-yellow-900 text-sm text-center px-2">Is C < 10 ?</div></div>
+                            </div>
+                            <div class="border-b-2 border-r-2 border-t-2 border-gray-400 w-12 h-[18rem] -mt-[2rem] ml-2 rounded-r-lg"><div class="w-full text-center text-xs font-bold text-green-600 mt-2 bg-white">Yes</div></div>
+                        </div>
+                        <div class="flex flex-col items-center my-1"><div class="w-0.5 h-6 bg-gray-400"></div><i data-lucide="arrow-down" class="text-gray-400 w-4 h-4 -mt-1"></i></div>
+                        <span class="text-xs font-bold text-red-600 ml-16 -mt-6 bg-white px-1">No</span>
+                        <div class="mx-auto w-52 flex justify-center relative"><div class="flex items-center justify-center text-center font-bold text-sm md:text-base border-2 shadow-sm px-4 py-2 w-48 bg-blue-50 border-blue-300 text-blue-800 transform skew-x-[-15deg]"><span class="transform skew-x-[15deg] block">Print Prod</span></div></div>
+                        <div class="flex flex-col items-center my-1"><div class="w-0.5 h-6 bg-gray-400"></div><i data-lucide="arrow-down" class="text-gray-400 w-4 h-4 -mt-1"></i></div>
+                        <div class="flex items-center justify-center text-center font-bold text-sm md:text-base border-2 shadow-sm px-4 py-2 w-48 rounded-full bg-red-50 border-red-300 text-red-800">Stop</div>
+                    </div>`
+            }
+        ];
+
+        // --- حالة التطبيق ---
+        let currentLang = 'ar';
+        let openQuestionId = null;
+
+        // --- الدوال الرئيسية ---
+
+        function toggleQuestion(id) {
+            openQuestionId = openQuestionId === id ? null : id;
+            renderQuestions();
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            // تحديث واجهة المستخدم العامة
+            const isAr = lang === 'ar';
+            document.getElementById('html-root').setAttribute('dir', isAr ? 'rtl' : 'ltr');
+            document.getElementById('html-root').setAttribute('lang', lang);
+            
+            document.getElementById('main-title').innerText = isAr ? 'حلول واجب سيف علي' : 'Saif Ali Assignment';
+            document.getElementById('sub-title').innerHTML = `<i data-lucide="user-check" class="w-4 h-4"></i> ${isAr ? 'جاهز للشرح الشفوي والمناقشة' : 'Ready for Verbal Explanation'}`;
+            
+            document.getElementById('tip-title').innerText = isAr ? 'نصيحة ذهبية' : 'Golden Tip';
+            document.getElementById('tip-body').innerText = isAr ? 
+                "الأساتذة يركزون على الفهم أكثر من الحفظ. افتح كل سؤال واقرأ (شلون تشرحها للأستاذ)، هذا المربع الأصفر هو السر اللي راح يخليك تجاوب بثقة وتاخذ درجة كاملة." : 
+                "Professors value understanding over memorization. Make sure to read the explanation part so you can confidently answer any oral questions.";
+
+            // تحديث شكل الأزرار
+            const btnAr = document.getElementById('btn-ar');
+            const btnEn = document.getElementById('btn-en');
+            
+            if (isAr) {
+                btnAr.className = "flex items-center gap-2 px-3 md:px-4 py-2 rounded-md font-bold transition-all text-sm bg-yellow-500 text-gray-900 shadow-sm";
+                btnEn.className = "flex items-center gap-2 px-3 md:px-4 py-2 rounded-md font-bold transition-all text-sm text-gray-400 hover:text-white";
+            } else {
+                btnEn.className = "flex items-center gap-2 px-3 md:px-4 py-2 rounded-md font-bold transition-all text-sm bg-white text-gray-900 shadow-sm";
+                btnAr.className = "flex items-center gap-2 px-3 md:px-4 py-2 rounded-md font-bold transition-all text-sm text-gray-400 hover:text-white";
+            }
+
+            // تحديث عنوان الطباعة المخفي
+            document.body.setAttribute('data-print-title', isAr ? 'حلول واجب سيف علي - برمجة C++' : 'Saif Ali Assignment - C++ Programming');
+
+            renderQuestions();
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+            const isAr = currentLang === 'ar';
+
+            assignmentData.forEach(item => {
+                const isOpen = openQuestionId === item.id;
+                
+                // بناء هيكل السؤال
+                const questionDiv = document.createElement('div');
+                questionDiv.className = "bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden transition-all duration-300 print-shadow-none print-mb-8";
+                
+                // رأس السؤال (للنقر)
+                const headerHtml = `
+                    <button onclick="toggleQuestion('${item.id}')" class="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-gray-50 transition-colors print-hidden" dir="auto">
+                        <h2 class="text-lg md:text-xl font-bold text-gray-800 pr-4">${isAr ? item.q_ar : item.q_en}</h2>
+                        <i data-lucide="${isOpen ? 'chevron-up' : 'chevron-down'}" class="w-6 h-6 ${isOpen ? 'text-yellow-600' : 'text-gray-400'} shrink-0"></i>
+                    </button>
+                    <!-- عنوان للطباعة فقط -->
+                    <div class="hidden print-block w-full px-6 py-5 bg-gray-50 border-b border-gray-200" dir="auto">
+                        <h2 class="text-lg md:text-xl font-bold text-gray-800">${isAr ? item.q_ar : item.q_en}</h2>
+                    </div>
+                `;
+
+                // محتوى الإجابة
+                let answerHtml = '';
+                if (!item.isAlgo) {
+                    answerHtml = `
+                        <div class="bg-gray-50 border-l-4 border-gray-800 p-5 rounded-r-lg">
+                            <div class="flex items-center gap-2 mb-3">
+                                <i data-lucide="check-circle-2" class="w-5 h-5 text-gray-800"></i>
+                                <h4 class="font-bold text-gray-800 uppercase text-sm tracking-wider">${isAr ? 'الجواب الرسمي (للامتحان)' : 'Formal Answer'}</h4>
+                            </div>
+                            <p class="text-gray-700 text-lg leading-loose whitespace-pre-wrap font-medium">${isAr ? item.ans_ar : item.ans_en}</p>
+                        </div>
+                    `;
+                } else {
+                    answerHtml = `
+                        <div class="flex flex-col md:flex-row gap-6">
+                            <!-- Algorithm Section -->
+                            <div class="flex-1 bg-slate-800 text-green-400 p-6 rounded-xl font-mono shadow-inner border border-slate-700">
+                                <h4 class="font-bold text-white uppercase text-sm mb-4 pb-2 border-b border-slate-600 flex items-center gap-2">
+                                    <i data-lucide="code" class="w-4 h-4"></i>
+                                    ${isAr ? 'الخوارزمية (Algorithm)' : 'Algorithm'}
+                                </h4>
+                                <pre class="whitespace-pre-wrap text-base md:text-lg leading-relaxed">${isAr ? item.algo_ar : item.algo_en}</pre>
+                            </div>
+                            
+                            <!-- Flowchart Section -->
+                            <div class="flex-1 bg-white border-2 border-gray-200 p-6 rounded-xl flex flex-col items-center shadow-sm">
+                                <h4 class="font-bold text-gray-800 uppercase text-sm mb-6 pb-2 border-b-2 border-gray-200 w-full text-center">
+                                    ${isAr ? 'المخطط الانسيابي (Flowchart)' : 'Flowchart'}
+                                </h4>
+                                <div class="transform scale-90 md:scale-100 origin-top">
+                                    ${item.flowchartHtml}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // مربع شرح الأستاذ
+                const explanationHtml = `
+                    <div class="bg-yellow-50 border-2 border-yellow-400 rounded-xl p-6 relative shadow-sm mt-8">
+                        <div class="absolute -top-4 right-6 bg-yellow-400 text-yellow-900 text-sm font-bold px-4 py-1.5 rounded-full shadow-md flex items-center gap-2">
+                            <i data-lucide="lightbulb" class="w-4 h-4"></i>
+                            شلون تشرحها للأستاذ؟ (مهم)
+                        </div>
+                        <p class="text-yellow-900 font-bold mt-3 font-serif text-lg leading-relaxed dir-rtl text-right" dir="rtl">
+                            "${item.explanation}"
+                        </p>
+                    </div>
+                `;
+
+                // تجميع كل الأجزاء
+                questionDiv.innerHTML = `
+                    ${headerHtml}
+                    <div class="accordion-content print-expand ${isOpen ? 'open' : ''}">
+                        <div class="p-6 space-y-8">
+                            ${answerHtml}
+                            ${explanationHtml}
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(questionDiv);
+            });
+
+            // إعادة تفعيل أيقونات Lucide بعد تحديث الـ DOM
+            lucide.createIcons();
+        }
+
+        // --- تصدير لملف Word ---
+        function exportWord() {
+            const isAr = currentLang === 'ar';
+            const dir = isAr ? 'rtl' : 'ltr';
+            const align = isAr ? 'right' : 'left';
+            
+            let html = `<html dir="${dir}" lang="${currentLang}">
+            <head>
+            <meta charset="utf-8">
+            <style>
+                body { font-family: 'Segoe UI', Tahoma, sans-serif; text-align: ${align}; padding: 20px; color: #000; }
+                h1 { color: #1e3a8a; border-bottom: 2px solid #1e3a8a; padding-bottom: 10px; text-align: center; }
+                h2 { color: #1f2937; margin-top: 30px; border-bottom: 1px solid #e5e7eb; padding-bottom: 5px; }
+                h4 { color: #047857; margin-top: 15px; }
+                .ans { background-color: #f9fafb; padding: 15px; border: 1px solid #e5e7eb; border-radius: 5px; font-size: 14pt; font-weight: bold; white-space: pre-wrap; }
+                .algo { font-family: monospace; background-color: #1e293b; color: #4ade80; padding: 15px; border-radius: 5px; font-size: 14pt; white-space: pre-wrap; }
+                .tip { background-color: #fef3c7; color: #92400e; padding: 15px; border: 1px solid #fde68a; border-radius: 5px; font-size: 14pt; font-weight: bold; }
+            </style>
+            </head>
+            <body>
+            <h1>${isAr ? 'حلول واجب سيف علي' : 'Saif Ali Assignment'}</h1>
+            `;
+
+            assignmentData.forEach(item => {
+                html += `<h2>${isAr ? item.q_ar : item.q_en}</h2>`;
+                if (!item.isAlgo) {
+                    html += `<h4>${isAr ? 'الجواب الرسمي:' : 'Formal Answer:'}</h4>`;
+                    html += `<div class="ans">${isAr ? item.ans_ar : item.ans_en}</div>`;
+                } else {
+                    html += `<h4>${isAr ? 'الخوارزمية (Algorithm):' : 'Algorithm:'}</h4>`;
+                    html += `<div class="algo">${isAr ? item.algo_ar : item.algo_en}</div>`;
+                    html += `<p style="color: #6b7280; font-style: italic;">${isAr ? '(ملاحظة: المخطط الانسيابي Flowchart لا يظهر في ملف الوورد، يرجى طباعة PDF لرؤيته)' : '(Note: Flowchart is not visible in Word export)'}</p>`;
+                }
+                html += `<h4>${isAr ? 'شلون تشرحها للأستاذ؟' : 'Explanation for Professor:'}</h4>`;
+                html += `<div class="tip">${item.explanation}</div>`;
+            });
+
+            html += `</body></html>`;
+
+            // تكوين الملف وتحميله
+            const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `Saif_Ali_Assignment_${currentLang}.doc`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // التهيئة الأولى عند تحميل الصفحة
+        window.onload = () => {
+            renderQuestions();
+            lucide.createIcons();
+        };
+    </script>
+</body>
+</html>
